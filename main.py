@@ -53,6 +53,69 @@ def create_dataset_folder(config):
     print(f"Created dataset folder: {dataset_folder}")
     return dataset_folder
 
+def handle_prompt_files(prompts_dir, images_dir):
+    """
+    Check if there's only one text file in the prompts directory.
+    If so, duplicate it to match all image filenames.
+    
+    Args:
+        prompts_dir (Path): Directory containing prompt files
+        images_dir (Path): Directory containing image files
+        
+    Returns:
+        bool: True if files were processed, False otherwise
+    """
+    if not prompts_dir.exists() or not images_dir.exists():
+        print(f"Warning: Either prompts directory '{prompts_dir}' or images directory '{images_dir}' does not exist.")
+        return False
+    
+    # Find all text files in the prompts directory
+    txt_files = list(prompts_dir.glob('*.txt'))
+    
+    # If there's only one text file, proceed with duplication
+    if len(txt_files) == 1:
+        single_txt_file = txt_files[0]
+        
+        # Get all image files
+        image_files = list(images_dir.glob('*.*'))
+        if not image_files:
+            print("Warning: No image files found to duplicate prompts for.")
+            return False
+        
+        print(f"Found single text file '{single_txt_file.name}'. Duplicating for {len(image_files)} images...")
+        
+        # Read the content of the single text file
+        try:
+            with open(single_txt_file, 'r', encoding='utf-8') as f:
+                txt_content = f.read()
+        except Exception as e:
+            print(f"Error reading text file '{single_txt_file}': {e}")
+            return False
+        
+        # Create a copy for each image file
+        for image_file in tqdm(image_files, desc="Duplicating prompt file"):
+            # Get the base filename without extension
+            image_name = os.path.splitext(image_file.name)[0]
+            # Create a new text file with the same name as the image
+            new_txt_file = prompts_dir / f"{image_name}.txt"
+            
+            try:
+                with open(new_txt_file, 'w', encoding='utf-8') as f:
+                    f.write(txt_content)
+            except Exception as e:
+                print(f"Error creating duplicate text file '{new_txt_file}': {e}")
+        
+        print(f"Successfully duplicated prompt file for {len(image_files)} images.")
+        return True
+    
+    # If there are multiple text files, do nothing
+    elif len(txt_files) > 1:
+        print(f"Found {len(txt_files)} text files in prompts directory. Skipping duplication step.")
+    else:
+        print("No text files found in prompts directory.")
+    
+    return False
+
 def copy_files(source_dir, target_dir, suffix=None):
     """
     Copy files from source directory to target directory,
@@ -113,8 +176,11 @@ def process_dataset(config):
     images_dir = base_path / folders.get("images", "images")
     total_files += copy_files(images_dir, dataset_folder)
     
-    # 2. Copy prompts (no suffix)
+    # 2. Handle prompt files special case
     prompts_dir = base_path / folders.get("prompts", "prompts")
+    handle_prompt_files(prompts_dir, images_dir)
+    
+    # Copy prompts (no suffix)
     total_files += copy_files(prompts_dir, dataset_folder)
     
     # 3. Copy mask files with _M suffix
