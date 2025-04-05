@@ -1,0 +1,11 @@
+{
+  "base_path": "C:/path/to/your/data",
+  "folders": {
+    "images": "images",
+    "prompts": "prompts",
+    "depth": "depth",
+    "pose": "pose",
+    "canny": "canny"
+  },
+  "output_folder": "datasets"
+}
