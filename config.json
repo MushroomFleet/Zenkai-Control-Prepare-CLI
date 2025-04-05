@@ -1,8 +1,9 @@
 {
-  "base_path": "C:/path/to/your/data",
+  "base_path": "C:\\Projects\\testset",
   "folders": {
     "images": "images",
     "prompts": "prompts",
+    "mask": "mask",
     "depth": "depth",
     "pose": "pose",
     "canny": "canny"

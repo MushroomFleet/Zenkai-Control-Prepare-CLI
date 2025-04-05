@@ -8,9 +8,10 @@ Zenkai Control Prepare is a tool designed to create control datasets by:
 
 1. Creating a new timestamped dataset folder
 2. Copying images and prompts directly
-3. Copying and renaming depth maps (with "_D" suffix)
-4. Copying and renaming pose maps (with "_P" suffix)
-5. Copying and renaming canny edge maps (with "_C" suffix)
+3. Copying and renaming mask maps (with "_M" suffix)
+4. Copying and renaming depth maps (with "_D" suffix)
+5. Copying and renaming pose maps (with "_P" suffix)
+6. Copying and renaming canny edge maps (with "_C" suffix)
 
 This tool simplifies the process of organizing control conditioning data for machine learning projects.
 
@@ -44,6 +45,7 @@ The system uses a JSON configuration file to define paths. Edit `config.json` to
   "folders": {
     "images": "images",
     "prompts": "prompts",
+    "mask": "mask",
     "depth": "depth",
     "pose": "pose",
     "canny": "canny"
@@ -58,6 +60,7 @@ The system uses a JSON configuration file to define paths. Edit `config.json` to
 - `folders`: Relative paths to each type of data folder
   - `images`: Folder containing original images
   - `prompts`: Folder containing prompt files
+  - `mask`: Folder containing mask maps
   - `depth`: Folder containing depth maps
   - `pose`: Folder containing pose maps
   - `canny`: Folder containing canny edge maps
@@ -75,7 +78,7 @@ run.bat
 3. The system will:
    - Create a new dataset folder with timestamp (e.g., `dataset_20250405_181500`)
    - Copy all files from the specified folders
-   - Rename depth, pose, and canny files with appropriate suffixes
+   - Rename mask, depth, pose, and canny files with appropriate suffixes (_M, _D, _P, _C)
    - Display progress and completion information
 
 ### Command Line Options
@@ -97,6 +100,9 @@ C:/my_data/
 ├── prompts/
 │   ├── img001.txt
 │   ├── img002.txt
+├── mask/
+│   ├── img001.png
+│   ├── img002.png
 ├── depth/
 │   ├── img001.png
 │   ├── img002.png
@@ -117,6 +123,8 @@ C:/my_data/
 │   │   ├── img002.png        (from images/)
 │   │   ├── img001.txt        (from prompts/)
 │   │   ├── img002.txt        (from prompts/)
+│   │   ├── img001_M.png      (from mask/)
+│   │   ├── img002_M.png      (from mask/)
 │   │   ├── img001_D.png      (from depth/)
 │   │   ├── img002_D.png      (from depth/)
 │   │   ├── img001_P.png      (from pose/)

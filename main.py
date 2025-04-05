@@ -117,15 +117,19 @@ def process_dataset(config):
     prompts_dir = base_path / folders.get("prompts", "prompts")
     total_files += copy_files(prompts_dir, dataset_folder)
     
-    # 3. Copy depth files with _D suffix
+    # 3. Copy mask files with _M suffix
+    mask_dir = base_path / folders.get("mask", "mask")
+    total_files += copy_files(mask_dir, dataset_folder, suffix="_M")
+    
+    # 4. Copy depth files with _D suffix
     depth_dir = base_path / folders.get("depth", "depth")
     total_files += copy_files(depth_dir, dataset_folder, suffix="_D")
     
-    # 4. Copy pose files with _P suffix
+    # 5. Copy pose files with _P suffix
     pose_dir = base_path / folders.get("pose", "pose")
     total_files += copy_files(pose_dir, dataset_folder, suffix="_P")
     
-    # 5. Copy canny files with _C suffix
+    # 6. Copy canny files with _C suffix
     canny_dir = base_path / folders.get("canny", "canny")
     total_files += copy_files(canny_dir, dataset_folder, suffix="_C")
     
