@@ -2,6 +2,8 @@
 
 A dataset creation system for preparing control datasets by organizing and renaming files from various source folders.
 
+[Workflows: IMP Dataset Creation and Loading Nodes](https://github.com/MushroomFleet/DJZ-Workflows/tree/main/DJZ-Nodes-Examples/Zenkai-ControlPrompt)
+
 ## Overview
 
 Zenkai Control Prepare is a tool designed to create control datasets by:
