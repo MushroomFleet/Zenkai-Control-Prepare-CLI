@@ -2,7 +2,7 @@
 
 A dataset creation system for preparing control datasets by organizing and renaming files from various source folders.
 
-[Workflows: IMP Dataset Creation and Loading Nodes](https://github.com/MushroomFleet/DJZ-Workflows/tree/main/DJZ-Nodes-Examples/Zenkai-ControlPrompt)
+[Workflows: CONTROL Dataset Creation and Loading Nodes](https://github.com/MushroomFleet/DJZ-Workflows/tree/main/DJZ-Nodes-Examples/Zenkai-ControlPrompt)
 
 ## Overview
 
